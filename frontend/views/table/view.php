@@ -7,19 +7,17 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Table */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Tables', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="table-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+        <?= Html::a('Quay lại ', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Đặt bàn này', ['booking', 'id' => $model->id], [
+            'class' => 'btn btn-success',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Bạn có chắc chắn đặt bàn này?',
                 'method' => 'post',
             ],
         ]) ?>

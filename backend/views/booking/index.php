@@ -2,12 +2,12 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\BookingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Bookings';
+$this->title = Yii::t('app', 'Bookings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="booking-index">
@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Booking', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Booking'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+<?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -27,14 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'table',
+            'table_type',
             'employee_id',
-            'eat_time:datetime',
-             'book_time:datetime',
-             'book_status',
-             'money_payed',
-             'cost',
+            // 'eat_time:datetime',
+            // 'book_time:datetime',
+            // 'book_status',
+            // 'money_payed',
+            // 'cost',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-</div>
+<?php Pjax::end(); ?></div>

@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/course.css',
     ];
     public $js = [
+        'js/checkTable.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'table') ?>
 
+    <?= $form->field($model, 'table_type') ?>
+
     <?= $form->field($model, 'employee_id') ?>
 
-    <?= $form->field($model, 'eat_time') ?>
+    <?php // echo $form->field($model, 'eat_time') ?>
 
     <?php // echo $form->field($model, 'book_time') ?>
 
@@ -34,8 +36,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'cost') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Table;
+use common\models\TableType;
 use Yii;
 use common\models\Booking;
 use common\models\BookingSearch;
@@ -62,10 +63,10 @@ class BookingController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($table_id)
+    public function actionCreate($table_type)
     {
-        $table = Table::find()->where(['=','id',$table_id])->asArray()->all();
-
+        $table_type = TableType::find()->where(['=','id',$table_type])->asArray()->all();
+        $table = Table::find()->asArray()->all();
         $model = new Booking();
 
         $employee = User::find()->select('id')->where(['=','positon',1])->asArray()->all();
@@ -74,7 +75,7 @@ class BookingController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = intval(Yii::$app->user->id);
             $model->employee_id = $employee['0']['id'];
-            $model->table = strval($table_id);
+            $model->$table_type = strval($table_type);
             $model->money_payed = 0;
             $model->book_time = time();
 
@@ -84,7 +85,8 @@ class BookingController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
-            'table' => $table,
+            'table_type' => $table_type,
+            "table" => $table,
         ]);
 
     }

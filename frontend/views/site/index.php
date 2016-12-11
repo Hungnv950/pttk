@@ -1,9 +1,10 @@
 <?php
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Home';
 $baseUrl = Yii::$app->urlManager->hostInfo;
+//echo Yii::getAlias('@common');die;
 ?>
 <div class="site-index">
 
@@ -12,7 +13,7 @@ $baseUrl = Yii::$app->urlManager->hostInfo;
 
         <p class="lead">Ăn không chỉ để no mà còn để thưởng thức</p>
 
-        <p><a class="btn btn-md btn-primary" href="booking">Đặt bàn ngay</a></p>
+        <p><a class="btn btn-md btn-primary" href="<?= Url::to(['table-type/index'])?>">Đặt bàn ngay</a></p>
     </div>
 
     <div class="body-content">
