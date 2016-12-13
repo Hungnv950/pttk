@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Shift;
 use common\models\Table;
 use common\models\TableType;
 use Yii;
@@ -38,9 +39,9 @@ class BookingController extends Controller
      */
     public function actionIndex()
     {
-        $model = Table::find()->where(['>','id',0])->asArray()->all();
+        $model = Table::find()->where(['>', 'id', 0])->asArray()->all();
 
-        return $this->render('index',[
+        return $this->render('index', [
             'model' => $model,
         ]);
 
@@ -65,28 +66,81 @@ class BookingController extends Controller
      */
     public function actionCreate($table_type)
     {
-        $table_type = TableType::find()->where(['=','id',$table_type])->asArray()->all();
-        $table = Table::find()->asArray()->all();
-        $model = new Booking();
 
-        $employee = User::find()->select('id')->where(['=','positon',1])->asArray()->all();
+        $model = new Booking();
+        $booking = Booking::find()->asArray()->all();
+        $user = User::find()->where(['id' => Yii::$app->user->id])->one();
+        $table = Table::find()->asArray()->all();
+        $shift = Shift::find()->asArray()->all();
+        $employee = User::find()->select('id')->where(['=', 'positon', 1])->asArray()->all();
+
         shuffle($employee);
-//        var_dump($employee);die;
-        if ($model->load(Yii::$app->request->post())) {
+
+        if ($model->load(Yii::$app->request->post()) ) {
             $model->user_id = intval(Yii::$app->user->id);
             $model->employee_id = $employee['0']['id'];
-            $model->$table_type = strval($table_type);
+            $model->table_type = $table_type;
             $model->money_payed = 0;
-            $model->book_time = time();
+            $model->book_time = Date('m-d-Y');
+            $model->book_status = 1;
+            $model->cost = 1;
+            $model->table_id = json_encode($model->table_id);
 
-            if($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            var_dump($model);die;
+            $model->save(false);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+        $table_type = TableType::find()->where(['=', 'id', $table_type])->asArray()->all();
         return $this->render('create', [
             'model' => $model,
             'table_type' => $table_type,
             "table" => $table,
+            "shift" => $shift,
+            'user' =>$user,
+            'booking' => $booking,
+        ]);
+
+    }
+    public function actionCreat2e($table_type)
+    {
+        /** @var TableType[] $table_type */
+
+//        var_dump($table_type);die;
+        $table = Table::find()->asArray()->all();
+        $shift = Shift::find()->asArray()->all();
+
+        $model = new Booking();
+
+        $employee = User::find()->select('id')->where(['=', 'positon', 1])->asArray()->all();
+        shuffle($employee);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->user_id = intval(Yii::$app->user->id);
+            $model->employee_id = $employee['0']['id'];
+            $model->table_type = $table_type;
+            $model->money_payed = 0;
+            $model->book_time = time();
+            $model->book_status = 1;
+            $model->cost = 1;
+            $model->table_id = json_encode($model->table_id);
+//            var_dump($model->table_id);die;
+
+            var_dump($model);
+            die;// echo $model->id;die;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        $table_type = TableType::find()->where(['=', 'id', $table_type])->asArray()->all();
+        return $this->render('create', [
+            'model' => $model,
+            'table_type' => $table_type,
+            "table" => $table,
+            "shift" => $shift,
         ]);
 
     }

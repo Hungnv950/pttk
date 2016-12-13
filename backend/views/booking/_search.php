@@ -19,13 +19,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'table') ?>
+    <?= $form->field($model, 'table_id') ?>
 
     <?= $form->field($model, 'table_type') ?>
 
-    <?= $form->field($model, 'employee_id') ?>
+    <?= $form->field($model, 'number_people') ?>
+
+    <?php // echo $form->field($model, 'employee_id') ?>
 
     <?php // echo $form->field($model, 'eat_time') ?>
+
+    <?php // echo $form->field($model, 'shift') ?>
 
     <?php // echo $form->field($model, 'book_time') ?>
 

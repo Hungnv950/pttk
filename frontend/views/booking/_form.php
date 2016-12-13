@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         ->dropDownList(['Trưa: 11h30-14h','Tối: 17h-22h30'],
             ['prompt' => '---Lựa chọn thời gian---'], ['onchange'=>'myFunction()'])?>
 
-    <?= $form->field($model, 'cost')->textInput() ?>
+    <?= $form->field($model, 'number_people')->textInput() ?>
 
     <div class="form-group" id="click">
         <?= Html::submitButton($model->isNewRecord ? 'Đặt bàn' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

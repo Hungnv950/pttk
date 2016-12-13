@@ -35,12 +35,10 @@ class TableController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Table::find(),
-        ]);
+        $model = Table::find()->asArray()->all();
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        return $this->render('index',[
+            'model' => $model
         ]);
     }
 

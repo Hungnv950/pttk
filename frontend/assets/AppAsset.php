@@ -14,9 +14,14 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/course.css',
+        'css/checkbox.css',
+        'css/user.css',
     ];
     public $js = [
-        'js/checkTable.js'
+       // 'js/jquery.js',
+        'js/checkTable.js',
+        'js/user.js',
+        'js/checkinput.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

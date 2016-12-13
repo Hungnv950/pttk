@@ -1,78 +1,69 @@
 <?php
 
 use yii\helpers\Html;
-use common\models\Table;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model common\models\Booking */
+/* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'Đặt bàn';
+//$booking = array_values($booking);
+//$booking = json_encode($booking);
+//print_r($booking);
 ?>
-<hr>
-<div class="booking-create"id="create">
+<h1 >Chào mừng bạn đến với chức năng đặt bàn</h1>
+<div class="container">
+    <div class="col-md-6 booking-form">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="clearfix"></div>
-    <div class="col-md-6 " >
         <h4><b>Loại Buffet</b>: <?=$table_type['0']['name']?></h4>
-        <h4><b>Mô tả</b>: <?=$table_type['0']['description']?></h4>
-        <a href="#table">Chọn bàn</a>
-        <?= $this->render('_form', [
-            'model' => $model,
-        ]) ?>
+        <h5><b>Mô tả</b>: <span style="color:#00a7d0 "><?=$table_type['0']['description']?></span></h5>
+        <?php $form = ActiveForm::begin(); ?>
+
+        <?= $form->field($model, 'number_people')->textInput() ?>
+
+        <?= $form->field($model, 'eat_time')->widget(DatePicker::className(), [
+            'options' => ['placeholder' => 'Chọn ngày'],
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+                'todayHighlight' => true
+            ]
+        ]);
+        ?>
+
+        <?= $form->field($model, 'shift')->dropDownList(
+            ArrayHelper::map(\common\models\Shift::find()->all(),'id','time'),['prompt'=>'Chọn thời gian'])
+        ?>
+
+        <?= $form->field($model, 'table_id')->checkboxList(
+            ArrayHelper::map(\common\models\Table::find()->all(),'id', 'name'),
+            [
+                'itemOptions' => [
+                    'class' => 'switch',
+                    'data' => [
+//                        'on-text' => 'ON',
+//                        'off-text' => 'OFF',
+//                        'on-color' => 'teal'
+                    ],
+                ],
+            ]
+        ) ?>
+
+        <h4>Tài khoản của bạn: <?php if($user['money'] == null) echo "0 VNĐ"; else echo $user['money']." VNĐ"?></h4>
+
+        <h4>Phí phải trả: <span id="money"></span></h4>
+
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 
     <div class="col-md-6">
-        <p><a href="<?= Url::to(['table-type/view']).'?id='.$table_type['0']['id']?>">Xem thực đơn của  <?=$table_type['0']['name']?> hôm nay</a> </p>
-        <hr>
-        <img src="<?=  \yii\helpers\Url::to('@imgs/imgs/', true) .$table_type['0']['image']?>" alt=""
-             style="width: 100%">
-        <br>
+        <img src="<?= Url::to('@imgs/imgs/', true).$table_type['0']['image']?>" style="width: 95%;display: inline-block;border: 1px solid #ddd;border-radius: 4px;    padding: 5px;    transition: 0.3s; margin-top: 20px;" alt="">
     </div>
-    <br>
-    <hr>
-    <hr>
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="slider">
-            <ul class="ul_slide" style="width: 1100px;">
-                <?php foreach ($table as $row) { ?>
-                    <li class="col-md-4 " id = "table"style="margin-left: -20px;margin-right: 15px;">
-                        <a href="<?= Url::to(['course/view/' . $row['id']]) ?>"
-                           title="<?= $row['name']; ?>">
-                        </a>
-                        <div class="item-hot" style="height: 360px; border: 1px solid #c0c0c0">
-                            <input type="checkbox" name="table" value="<?= $row['id']?>">
-                            <div >
-                                <div class="small-screen-box">
-                                    <div>
-                                        <a href="<?= Url::to(['table/view'])?>?id=<?= $row['id']?>"
-                                           title="<?= $row['name']; ?>">
-                                            <h3 class="title-course-hot" title="<?= $row['name']; ?>">
-                                                <?= $row['name']; ?>
-                                            </h3>
-                                        </a>
-                                        <img src="<?= Url::to('@imgs/imgs/', true) . $row['image'] ?>" style="height=150px; width: 100%; position: relative; bottom: 0px">
-                                        <div class="des" style="float: right">
-                                            <p>Loại bàn :<?= $row['description'] ?> </p>
-                                            <p>Hạng: <?= $row['status'] ?></p>
-                                        </div>
-                                        <div class="price" style="margin-top: 5px; float: right; background: skyblue; padding: 2px 5px; border-radius: 2px;">
-                                            <p>Giá đặt bàn:<?= $row['price'] ?>VNĐ</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn btn-sm btn-primary">
-                                <a href="<?= Url::to(['table'])?>table_id=<?=$row['id']?>" style="color: #ffffff">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </li>
-                <?php } ?>
-            </ul>
-        </div> <a href="#create" class="btn btn-success">Tiếp tục</a>
-    </div>
-
-
 </div>
+

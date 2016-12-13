@@ -26,11 +26,15 @@ $this->title = 'Cảm ơn bạn đã ủng hộ nhà hàng của chúng tôi';
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-//            'id',
-//            'user_id',
-//            'table',
-//            'employee_id',
-            'eat_time:datetime',
+//          'attributes' => [
+            'id',
+            'user_id',
+            'table_id',
+            'table_type',
+            'number_people',
+            'employee_id',
+            'eat_time',
+            'shift',
             'book_time:datetime',
             'book_status',
             'money_payed',

@@ -18,8 +18,8 @@ class BookingSearch extends Booking
     public function rules()
     {
         return [
-            [['id', 'user_id', 'table', 'table_type', 'eat_time', 'book_time', 'money_payed', 'cost'], 'integer'],
-            [['employee_id', 'book_status'], 'safe'],
+            [['id', 'user_id', 'table_type', 'number_people', 'shift', 'book_time', 'money_payed', 'cost'], 'integer'],
+            [['table_id', 'employee_id', 'eat_time', 'book_status'], 'safe'],
         ];
     }
 
@@ -61,15 +61,17 @@ class BookingSearch extends Booking
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'table' => $this->table,
             'table_type' => $this->table_type,
+            'number_people' => $this->number_people,
             'eat_time' => $this->eat_time,
+            'shift' => $this->shift,
             'book_time' => $this->book_time,
             'money_payed' => $this->money_payed,
             'cost' => $this->cost,
         ]);
 
-        $query->andFilterWhere(['like', 'employee_id', $this->employee_id])
+        $query->andFilterWhere(['like', 'table_id', $this->table_id])
+            ->andFilterWhere(['like', 'employee_id', $this->employee_id])
             ->andFilterWhere(['like', 'book_status', $this->book_status]);
 
         return $dataProvider;

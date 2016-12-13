@@ -9,7 +9,7 @@ $baseUrl = Yii::$app->urlManager->hostInfo;
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Chào mừng bạn đến với nhà hàng !</h1>
+        <h1>Chào mừng bạn đến với Buffet Gumbio !</h1>
 
         <p class="lead">Ăn không chỉ để no mà còn để thưởng thức</p>
 
