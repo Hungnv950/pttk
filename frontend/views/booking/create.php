@@ -13,6 +13,9 @@ $this->title = 'Đặt bàn';
 //$booking = array_values($booking);
 //$booking = json_encode($booking);
 //print_r($booking);
+
+$tab = ArrayHelper::map(\common\models\Table::find()->all(),'id', 'name');
+$i=1;
 ?>
 <h1 >Chào mừng bạn đến với chức năng đặt bàn</h1>
 <div class="container">
@@ -37,8 +40,10 @@ $this->title = 'Đặt bàn';
             ArrayHelper::map(\common\models\Shift::find()->all(),'id','time'),['prompt'=>'Chọn thời gian'])
         ?>
 
+        <?= $form->field($model, 'book_status')->dropDownList([''])        ?>
+
         <?= $form->field($model, 'table_id')->checkboxList(
-            ArrayHelper::map(\common\models\Table::find()->all(),'id', 'name'),
+            $tab,
             [
                 'itemOptions' => [
                     'class' => 'switch',

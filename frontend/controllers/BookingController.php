@@ -66,7 +66,6 @@ class BookingController extends Controller
      */
     public function actionCreate($table_type)
     {
-
         $model = new Booking();
         $booking = Booking::find()->asArray()->all();
         $user = User::find()->where(['id' => Yii::$app->user->id])->one();
@@ -84,9 +83,13 @@ class BookingController extends Controller
             $model->book_time = Date('m-d-Y');
             $model->book_status = 1;
             $model->cost = 1;
-            $model->table_id = json_encode($model->table_id);
+            $data = '';
+            foreach ($model->table_id as $row) {
+                $data.=$row.' ';
+            }
+            $model->table_id = trim($data);
 
-            var_dump($model);die;
+//            var_dump($model);die;
             $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -125,8 +128,8 @@ class BookingController extends Controller
             $model->table_id = json_encode($model->table_id);
 //            var_dump($model->table_id);die;
 
-            var_dump($model);
-            die;// echo $model->id;die;
+//            var_dump($model);
+//            die;// echo $model->id;die;
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -174,7 +177,7 @@ class BookingController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->goHome();
     }
 
     /**
