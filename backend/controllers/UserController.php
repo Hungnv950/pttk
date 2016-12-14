@@ -42,7 +42,7 @@ class UserController extends Controller
 
         switch ($user_id) {
             case "1": $dataProvider = new ActiveDataProvider(['query' => User::find()->where(['positon'=>'1'])->orderBy('positon'),]);break;
-            case "0": $dataProvider = new ActiveDataProvider(['query' => User::find()->where(['positon'=>'0'])->orderBy('positon'),]);break;
+            case "0": $dataProvider = new ActiveDataProvider(['query' => User::find()->where(['positon'=> 'null'])->orderBy('positon'),]);break;
 //            case "3":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'3'])->orderBy('book_status'),]);break;
 //            case "4":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'4'])->orderBy('book_status'),]);break;
 //            case "5":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'5'])->orderBy('book_status'),]);break;

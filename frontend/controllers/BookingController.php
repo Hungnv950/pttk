@@ -170,4 +170,14 @@ class BookingController extends Controller
         }
         return $cost;
     }
+
+    public function actionPhone() {
+
+        $user_id = Yii::$app->user->id;
+        $phone = $_GET['phone_number'];
+        $user = User::find()->where(['id'=>$user_id])->one();
+        $user->phone_number = $phone;
+        $user->save();
+        return $this->goHome();
+    }
 }

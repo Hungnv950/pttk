@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -22,7 +23,11 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <?php
-    $user_pr = Yii::$app->user->identity->phone_number;
+    if (Yii::$app->user->isGuest) {
+        $user_pr ='1';
+    }else {
+        $user_pr = Yii::$app->user->identity->phone_number;
+    }
 //    var_dump($user_pr);die;
     ?>
 
@@ -63,6 +68,34 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-phone"></span> Bạn chưa khai báo số điện thoại</h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form action="<?= Url::to(['booking/phone'])?>" role="form">
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-phone"></span> Nhập số điện thoại</label>
+                                <input type="text" class="form-control" id="psw" name="phone_number" placeholder="Nhập số điện thoại">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div class="container">
         <?= Breadcrumbs::widget([

@@ -19,9 +19,14 @@ if (Yii::$app->controller->action->id === 'login') {
     if (class_exists('backend\assets\AppAsset')) {
         backend\assets\AppAsset::register($this);
     } else {
-        app\assets\AppAsset::register($this);
+        app\assets\AppAsse::register($this);
     }
-
+    if(!Yii::$app->user->isGuest) {
+        $user_name = Yii::$app->user->identity->username;
+    }
+    else {
+        $user_name = "GUEST";
+    }
     dmstr\web\AdminLteAsset::register($this);
 
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
@@ -42,18 +47,28 @@ if (Yii::$app->controller->action->id === 'login') {
 
         <?= $this->render(
             'header.php',
-            ['directoryAsset' => $directoryAsset]
+            [
+                'directoryAsset' => $directoryAsset,
+                'username' => $user_name
+            ]
         ) ?>
 
         <?= $this->render(
             'left.php',
-            ['directoryAsset' => $directoryAsset]
+            [
+                'directoryAsset' => $directoryAsset,
+                'username' => $user_name
+            ]
         )
         ?>
 
         <?= $this->render(
             'content.php',
-            ['content' => $content, 'directoryAsset' => $directoryAsset]
+            [
+                'content' => $content,
+                'directoryAsset' => $directoryAsset,
+                'username' => $user_name
+            ]
         ) ?>
 
     </div>

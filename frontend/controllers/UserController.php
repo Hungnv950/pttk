@@ -66,8 +66,6 @@ class UserController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post())) {
-
-            $model->positon = 0;
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -87,7 +85,9 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+//            var_dump($model);die;
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

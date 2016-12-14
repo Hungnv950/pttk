@@ -104,7 +104,7 @@ class SiteController extends Controller
             $model->email = $attributes['id'].'@facebook.com';
             $model->password = md5($attributes['id']);
             $model->phone_number = 'null';
-            $model->posiston = 0;
+//            $model->posiston = "0";
             $model->generateAuthKey();
 //            var_dump($model);die;
             if ($model->save()){
