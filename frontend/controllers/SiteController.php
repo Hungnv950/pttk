@@ -104,7 +104,8 @@ class SiteController extends Controller
             $model->email = $attributes['id'].'@facebook.com';
             $model->password = md5($attributes['id']);
             $model->phone_number = 'null';
-                $model->generateAuthKey();
+            $model->posiston = 0;
+            $model->generateAuthKey();
 //            var_dump($model);die;
             if ($model->save()){
                 Yii::$app->getUser()->login($model);               }

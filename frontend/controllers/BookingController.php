@@ -54,8 +54,12 @@ class BookingController extends Controller
      */
     public function actionView($id)
     {
+        $table_type = TableType::find()->asArray()->all();
+        $shift = Shift::find()->asArray()->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'table_type' => $table_type,
+            'shift' => $shift,
         ]);
     }
 
@@ -80,9 +84,11 @@ class BookingController extends Controller
             $model->employee_id = $employee['0']['id'];
             $model->table_type = $table_type;
             $model->money_payed = 0;
-            $model->book_time = Date('m-d-Y');
+
+            $model->book_time = time();
+//            var_dump($model);die;
             $model->book_status = 1;
-            $model->cost = 1;
+            $model->cost = $this->cost($model->table_type,$model->number_people, $model->shift);
             $data = '';
             foreach ($model->table_id as $row) {
                 $data.=$row.' ';
@@ -104,49 +110,7 @@ class BookingController extends Controller
         ]);
 
     }
-    public function actionCreat2e($table_type)
-    {
-        /** @var TableType[] $table_type */
 
-//        var_dump($table_type);die;
-        $table = Table::find()->asArray()->all();
-        $shift = Shift::find()->asArray()->all();
-
-        $model = new Booking();
-
-        $employee = User::find()->select('id')->where(['=', 'positon', 1])->asArray()->all();
-        shuffle($employee);
-        if ($model->load(Yii::$app->request->post())) {
-
-            $model->user_id = intval(Yii::$app->user->id);
-            $model->employee_id = $employee['0']['id'];
-            $model->table_type = $table_type;
-            $model->money_payed = 0;
-            $model->book_time = time();
-            $model->book_status = 1;
-            $model->cost = 1;
-            $model->table_id = json_encode($model->table_id);
-//            var_dump($model->table_id);die;
-
-//            var_dump($model);
-//            die;// echo $model->id;die;
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-        $table_type = TableType::find()->where(['=', 'id', $table_type])->asArray()->all();
-        return $this->render('create', [
-            'model' => $model,
-            'table_type' => $table_type,
-            "table" => $table,
-            "shift" => $shift,
-        ]);
-
-    }
 
     /**
      * Updates an existing Booking model.
@@ -194,5 +158,16 @@ class BookingController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    private function cost($table_type, $num_people, $shift) {
+        $table_cost = TableType::find()->where(['id' => $table_type])->one()->status;
+//        var_dump($table_cost);die;
+        if ($shift == 5) {
+            $cost = $table_cost*$num_people;
+        }else {
+            $cost = $table_cost*$num_people*1.1;
+        }
+        return $cost;
     }
 }

@@ -21,10 +21,15 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?php
+    $user_pr = Yii::$app->user->identity->phone_number;
+//    var_dump($user_pr);die;
+    ?>
+
 </head>
 <body>
 <?php $this->beginBody() ?>
-
+<span id="user_pr"><?= $user_pr?></span>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -67,6 +72,7 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
+
 
 <footer class="footer">
     <div class="container">

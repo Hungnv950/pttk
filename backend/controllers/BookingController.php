@@ -2,9 +2,13 @@
 
 namespace backend\controllers;
 
+use common\models\AdvancedService;
+use common\models\BookingService;
+use common\models\User;
 use Yii;
 use common\models\Booking;
 use common\models\BookingSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,8 +39,20 @@ class BookingController extends Controller
      */
     public function actionIndex()
     {
+        $status = $_GET['status'];
+
         $searchModel = new BookingSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        switch ($status) {
+
+            case "1": $dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'1'])->orderBy('book_status'),]);break;
+            case "2": $dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'2'])->orderBy('book_status'),]);break;
+            case "3":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'3'])->orderBy('book_status'),]);break;
+            case "4":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'4'])->orderBy('book_status'),]);break;
+            case "5":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'5'])->orderBy('book_status'),]);break;
+
+            default: $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -123,5 +139,27 @@ class BookingController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /*
+    * View detail Booking and service of booking
+    * */
+    public function actionInvoice() {
+        $booking_id = $_GET['id'];
+//        var_dump($booking_id);die;
+        $booking_detail = Booking::find()->where(['id'=> $booking_id])->asArray()->one();
+//        var_dump($booking_detail);die;
+        $service_detail = BookingService::find()->where(['booking_id'=> $booking_id])->asArray()->all();
+//        var_dump($service_detail);die;
+        $advanced_service = AdvancedService::find()->asArray()->all();
+        $user_detail=User::find()->where(['id'=>$booking_detail['user_id']])->asArray()->one();
+//        $table_type_detail=TableType::find()->where(['id'=>$booking_detail['table_type']])->asArray()->one();
+        return $this->render('invoice',[
+            'booking_detail' => $booking_detail,
+            'service_detail' => $service_detail,
+            'advanced_service' => $advanced_service,
+            'user_detail' => $user_detail,
+//            'table_type_detail'=>$table_type_detail
+        ]);
     }
 }

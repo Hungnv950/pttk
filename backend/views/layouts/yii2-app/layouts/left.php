@@ -36,9 +36,9 @@
                         'icon' => 'glyphicon glyphicon-user',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'All User', 'icon' => 'glyphicon glyphicon-asterisk','url' => ['/user/index']],
-                            ['label' => 'Employee', 'icon' => 'glyphicon glyphicon-adjust','url' => ['/user/index']],
-                            ['label' => 'Customer', 'icon' => 'glyphicon glyphicon-tint','url' => ['/user/index']],
+                            ['label' => 'All User', 'icon' => 'glyphicon glyphicon-asterisk','url' => ['/user/index?user_id=']],
+                            ['label' => 'Employee', 'icon' => 'glyphicon glyphicon-adjust','url' => ['/user/index?user_id=1']],
+                            ['label' => 'Customer', 'icon' => 'glyphicon glyphicon-tint','url' => ['/user/index?user_id=0']],
                         ]
                     ],
                     [
@@ -46,11 +46,12 @@
                         'icon' => 'fa fa-file-code-o',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'All Booking','icon' => 'glyphicon glyphicon-asterisk', 'url' => ['/booking/index']],
-                            ['label' => 'Wait', 'icon' => 'glyphicon glyphicon-option-horizontal','url' => ['/booking/index']],
-                            ['label' => 'Eating', 'icon' => 'glyphicon glyphicon-check','url' => ['/booking/index']],
-                            ['label' => 'Cancel','icon' => 'glyphicon glyphicon-remove', 'url' => ['/booking/index']],
-                            ['label' => 'Done', 'icon' => 'glyphicon glyphicon-ok','url' => ['/booking/index']],
+                            ['label' => 'All Booking','icon' => 'glyphicon glyphicon-asterisk', 'url' => ['/booking/index?status=0']],
+                            ['label' => 'Wait', 'icon' => 'glyphicon glyphicon-option-horizontal','url' => ['/booking/index?status=1']],
+                            ['label' => 'Cancel', 'icon' => 'glyphicon glyphicon-remove','url' => ['/booking/index?status=2']],
+                            ['label' => 'Accept', 'icon' => 'glyphicon glyphicon-check','url' => ['/booking/index?status=3']],
+                            ['label' => 'Eating','icon' => 'glyphicon glyphicon-time', 'url' => ['/booking/index?status=4']],
+                            ['label' => 'Done', 'icon' => 'glyphicon glyphicon-ok','url' => ['/booking/index?status=5']],
                         ],
                     ],
                     [
@@ -58,11 +59,12 @@
                         'url' => ['/table/index'],
                         'icon' => 'glyphicon glyphicon-blackboard',
                         'items' => [
-                            ['label' => 'Tables','icon' => 'glyphicon glyphicon-blackboard', 'url' => ['/table-type/index']],
+                            ['label' => 'Tables','icon' => 'glyphicon glyphicon-blackboard', 'url' => ['/table/index']],
                             ['label' => 'Table Type','icon' => 'glyphicon glyphicon-tag', 'url' => ['/table-type/index']],
                         ]
                     ],
                     ['label' => 'Service','icon' => 'glyphicon glyphicon-plus', 'url' => ['/advanced-service/index']],
+                    ['label' => 'Booking Serivce', 'url' => ['/booking-service/index?id=0']],
 
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
 

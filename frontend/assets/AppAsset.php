@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
         'js/checkTable.js',
         'js/user.js',
         'js/checkinput.js',
+//        'js/checkPhoneNumber.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

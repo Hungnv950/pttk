@@ -23,6 +23,7 @@ $config = [
                     'class' => 'fproject\rest\UrlRule',
                     'controller' => [
                         'v1/user',
+//                        'v1/booking',
                     ],
                 ]
             ],
@@ -41,6 +42,10 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => false, // Don't forget to set Auto login to false
         ],
+//        'booking' => [
+//            'identityClass' => 'app\models\User',
+//            'enableAutoLogin' => false, // Don't forget to set Auto login to false
+//        ],
         // Enable logging for API in a api Directory different than web directory
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

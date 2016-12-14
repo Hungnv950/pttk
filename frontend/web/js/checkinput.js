@@ -21,9 +21,11 @@
     $('#booking-shift').change(function() {
         shift=$(this).val();
         alone();
+        price();
     });
 
     function alone() {
+        $('input[type="checkbox"]').removeAttr('checked');
         for (enable in table_had) {
             $('#booking-table_id input[value='+ table_had[enable] +']').removeAttr('disabled','disabled');
         }
@@ -50,6 +52,43 @@
             $('#booking-table_id input[value='+ table_had[had] +']').attr('disabled','disabled');
         }
 
+
     }
+    //max checkbox
+    var people_number = 0;
+    var max = 1;
+
+    $('#booking-number_people').keyup(function () {
+        $('input[type="checkbox"]').removeAttr('checked');
+        people_number = this.value;
+        console.log(people_number);
+        if (people_number>0) {
+            max = people_number / 4;
+            price();
+        }
+    });
+
+    var checkboxes = $('input[type="checkbox"]');
+    checkboxes.change(function () {
+        var current = checkboxes.filter(':checked').length;
+        checkboxes.filter(':not(:checked)').prop('disabled',current >= max);
+        for (had in table_had) {
+            $('#booking-table_id input[value='+ table_had[had] +']').attr('disabled','disabled');
+        }
+    });
+
+    // console.log($('#table_price').text() * 2);
+
+    function price() {
+        //tinh tien
+        // $('#money').innerHTML='111111';
+        var money = $('#table_price').text() * people_number;
+        if ($('#booking-shift').val() == 6) {
+            money = Math.round( money * 1.1 ) ;
+        }
+        console.log($('#table_price').val());
+        document.getElementById('money').innerHTML = money;
+    }
+
 
 })();

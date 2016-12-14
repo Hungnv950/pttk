@@ -31,13 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <div class="col-md-2"><?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?></div>
+                    <div class="col-md-9">
+                        <div class="col-md-4"> - or width</div>
+                        <?= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['site/auth']
+                        ]) ?></div>
                 </div>
 
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-    <?= yii\authclient\widgets\AuthChoice::widget([
-        'baseAuthUrl' => ['site/auth']
-    ]) ?>
 </div>

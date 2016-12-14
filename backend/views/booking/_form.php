@@ -35,12 +35,12 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'shift')->dropDownList(
         ArrayHelper::map(\common\models\Shift::find()->all(),'id','time'),['prompt'=>'Chọn thời gian'])
     ?>
-
     <?= $form->field($model, 'book_time')->textInput([
         'class' => 'form-control datepicker',
-        'value' => isset($model->book_time)?date('Y/m/d',$model->book_time):'',
+        'value' => isset($model->book_time)?date('yyyy-mm-dd',$model->book_time):'',
         'placeholder' => 'Time'])
-        ->label('Attendance Date') ?>
+        ->label('Attendance Date')
+    ?>
 
     <?= $form->field($model, 'book_status')->dropDownList(
         $array = [

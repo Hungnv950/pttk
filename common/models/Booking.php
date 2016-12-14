@@ -54,15 +54,15 @@ class Booking extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'table_id' => Yii::t('app', 'Bàn'),
-            'table_type' => Yii::t('app', 'Table Type'),
+            'table_type' => Yii::t('app', 'Loại Buffet'),
             'number_people' => Yii::t('app', 'Số xuất ăn'),
             'employee_id' => Yii::t('app', 'Employee ID'),
             'eat_time' => Yii::t('app', 'Ngày ăn'),
             'shift' => Yii::t('app', 'Thời gian'),
-            'book_time' => Yii::t('app', 'Book Time'),
+            'book_time' => Yii::t('app', 'Thời gian đặt bàn'),
             'book_status' => Yii::t('app', 'Book Status'),
             'money_payed' => Yii::t('app', 'Money Payed'),
-            'cost' => Yii::t('app', 'Cost'),
+            'cost' => Yii::t('app', 'Số tiền'),
         ];
     }
 

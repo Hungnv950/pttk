@@ -8,10 +8,11 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\BookingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-//$table_type = $_GET['table_type'];
+$table_type = $_GET['table_type'];
+//var_dump($table_type);die;
 ?>
-<h2 style="text-align: center">Lựa chọn bàn của bạn</h2>
-<a href="" id="click" class="btn btn-danger" style="text-align: right; float: right">Tiếp tục đặt bàn</a>
+<h2 style="text-align: center">Hiển thị các bàn</h2>
+<a href="<?= Url::to(['booking/create?table_type=']).$table_type?>" id="" class="btn btn-danger" style="text-align: right; float: right">Tiếp tục đặt bàn</a>
 <div class="subject-hot">
     <div class="main-subject">
         <div class="slider">
@@ -22,7 +23,7 @@ use yii\helpers\Url;
                            title="<?= $row['name']; ?>">
                         </a>
                         <div class="item-hot" style="height: 360px; border: 1px solid #c0c0c0">
-                            <input type="checkbox" name="table" value="<?= $row['id']?>">
+<!--                            <input type="checkbox" name="table" value="--><?//= $row['id']?><!--">-->
                             <div >
                                 <div class="small-screen-box">
                                     <div>

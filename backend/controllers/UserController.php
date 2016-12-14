@@ -3,11 +3,12 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\User;
 use backend\models\UserSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\User;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -35,8 +36,19 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = $_GET['user_id'];
+
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        switch ($user_id) {
+            case "1": $dataProvider = new ActiveDataProvider(['query' => User::find()->where(['positon'=>'1'])->orderBy('positon'),]);break;
+            case "0": $dataProvider = new ActiveDataProvider(['query' => User::find()->where(['positon'=>'0'])->orderBy('positon'),]);break;
+//            case "3":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'3'])->orderBy('book_status'),]);break;
+//            case "4":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'4'])->orderBy('book_status'),]);break;
+//            case "5":$dataProvider = new ActiveDataProvider(['query' => Booking::find()->where(['book_status'=>'5'])->orderBy('book_status'),]);break;
+
+            default: $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
